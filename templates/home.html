@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form class="login" method="post" action="{% url 'store' %}">
+    {% csrf_token %}
+    <label for="access">Access Key / User ID</label>
+    <input type="text" name="access" class="inputfield" placeholder="user_default">
+    <label for="secret">Secret Key / Password</label>
+    <input type="password" name="secret" class="inputfield" placeholder="123">
+    <button type="submit" value="login">Войти</button>
+    </form>
+{% endblock %}

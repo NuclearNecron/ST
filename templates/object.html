@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block mycss %} <style> img{
+    max-width: 1280px;
+    max-height: 720px;
+} </style> {% endblock %}
+
+{% block content %}
+
+    <input type="button" onclick="history.back();" value="Назад"/>
+    <br><a>Имя файла: {{ object_name }}</a>
+    <br><a>Размер файла: {{ object_info.size }} байт</a>
+    <br><a>Дата последнего изменения: {{ object_info.last_modified }}</a>
+      {% with 'image/'|add:object_name as fp_static %}
+      <br><a href="{% static fp_static %}"><img src="{% static fp_static %}"  alt="Изображение не загружено" /></a>
+          <div>
+          <form action="/download/{{object_name}}">
+          <button onclick="document.location='{% static fp_static %}' ">Скачать изображение</button>
+              </form>
+          </div>
+      {% endwith %}
+
+    <br>
+    <form action="{% url 'model_form_edit' object_name%}" method="post">
+    {% csrf_token %}
+     <button type="submit"}>Редактировать</button>
+     </form>
+
+    <br>
+            <form action="{% url 'delete' object_name%}" method="post">
+                {% csrf_token %}
+                <button type="submit" name='delete_object' value={{object_name}}>Удалить.</button>
+            </form>
+
+{% endblock %}
